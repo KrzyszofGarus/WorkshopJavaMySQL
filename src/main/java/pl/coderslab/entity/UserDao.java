@@ -5,12 +5,19 @@ import org.mindrot.jbcrypt.*;
 
 public class UserDao {
 
-    private static final String CREATE_USER_QUERY =
-            "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+    private static final String CREATE_USER_QUERY = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+    private static final String REMOVE_USER_QUERY = "DElETE FROM users where id=?";
+    private static final String UPDATE_USER_QUERY = "UPDATE users SET username = '?', email ='?' where id = ?";
+    private static final String SHOW_USER = "SELECT * FROM users where id = ?";
+    private static final String SHOW_USERS = "SELECT * FROM users";
+
+
+
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
     public User create(User user) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement =
